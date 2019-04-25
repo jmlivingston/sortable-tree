@@ -1,9 +1,11 @@
-import React, {Fragment, useState} from 'react'
+import React, {useState} from 'react'
 import dummyData from './data.json'
 import Tree from './Tree'
-import TreeCellExpander from './TreeCellExpander'
+import TreeCellExpander from './TreeExpander'
 
 const Tester = () => {
+  const [nodes, setNodes] = useState()
+
   const [sortInfo, setSortInfo] = useState({
     property: 'title',
     isAsc: true
@@ -37,7 +39,6 @@ const Tester = () => {
       property,
       isAsc: sortInfo.property === property ? !sortInfo.isAsc : true
     })
-    // setNodes(Object.keys(nodes).sort(sort))
   }
 
   const onDrop = evt => {
@@ -62,54 +63,51 @@ const Tester = () => {
     sortInfo.property === property ? sortInfo.isAsc ? <span>▼</span> : <span>▲</span> : null
 
   return (
-    <Fragment>
-      <table className='table table-bordered'>
-        <thead>
-          <tr>
-            <th style={styles.header}>
-              <span onClick={() => onHeaderClick({property: 'title'})}>
-                Title <Expander property='title' />
-              </span>
-            </th>
-            <th style={styles.header}>
-              <span onClick={() => onHeaderClick({property: 'id'})}>
-                ID <Expander property='id' />
-              </span>
-            </th>
-            <th style={styles.header}>
-              <span onClick={() => onHeaderClick({property: 'isFolder'})}>
-                Is Folder? <Expander property='isFolder' />
-              </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <Tree
-            canExpand={node => node.isFolder}
-            getData={getData}
-            isInitialExpanded={true}
-            level={0}
-            node={{id: '0'}}
-            onDrop={onDrop}
-            sort={sort}>
-            {({node, level, onExpand, canExpand, isExpanded, isExpandable, childNodes}) => (
-              <Fragment>
+    <table className='table table-bordered'>
+      <thead>
+        <tr>
+          <th style={styles.header}>
+            <span onClick={() => onHeaderClick({property: 'title'})}>
+              Title <Expander property='title' />
+            </span>
+          </th>
+          <th style={styles.header}>
+            <span onClick={() => onHeaderClick({property: 'id'})}>
+              ID <Expander property='id' />
+            </span>
+          </th>
+          <th style={styles.header}>
+            <span onClick={() => onHeaderClick({property: 'isFolder'})}>
+              Is Folder? <Expander property='isFolder' />
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <Tree
+          canExpand={node => node.isFolder}
+          getData={getData}
+          isInitialExpanded={true}
+          level={0}
+          node={{id: '0'}}
+          nodes={nodes}
+          setNodes={setNodes}
+          onDrop={onDrop}
+          sort={sort}>
+          {({node, level, onExpand, canExpand, isExpanded, isExpandable, childNodes}) => (
+            <tr>
+              <td style={{whiteSpace: 'nowrap', width: '1px'}}>
                 <TreeCellExpander level={level} onExpand={onExpand} isExpanded={isExpanded} isExpandable={isExpandable}>
-                  <span onClick={onExpand}>
-                    {node.title}
-                    {isExpanded.toString()}
-                  </span>
+                  <span onClick={onExpand}>{node.value.title}</span>
                 </TreeCellExpander>
-                <td>
-                  {node.id} {level}
-                </td>
-                <td>{node.isFolder.toString()}</td>
-              </Fragment>
-            )}
-          </Tree>
-        </tbody>
-      </table>
-    </Fragment>
+              </td>
+              <td>{node.id}</td>
+              <td>{node.value.isFolder.toString()}</td>
+            </tr>
+          )}
+        </Tree>
+      </tbody>
+    </table>
   )
 }
 

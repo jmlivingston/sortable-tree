@@ -1,52 +1,49 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import './TreeCellExpander.scss'
+import './TreeExpander.scss'
 
-const TreeCellExpander = ({
+const TreeExpander = ({
   children,
   iconExpandClosed,
   iconExpandOpened,
   iconNonExpander,
+  isExpandable,
   isExpanded,
   level,
-  isExpandable,
   onExpand,
-  paddingLeftInitial,
   paddingLeftMultiplier
 }) => (
-  <td
-    className='cell-expander-container'
+  <div
+    className='tree-expander-container'
     style={{
-      paddingLeft: `${level * paddingLeftMultiplier + paddingLeftInitial}px`
+      paddingLeft: `${level * paddingLeftMultiplier}px`
     }}>
     {isExpandable ? (
-      <span onClick={onExpand} className='cell-expander'>
+      <span onClick={onExpand} className='tree-expander'>
         {isExpanded ? iconExpandOpened : iconExpandClosed}
       </span>
     ) : (
       iconNonExpander
     )}
-    <span className='cell-title' onClick={onExpand}>
+    <span className='tree-title' onClick={onExpand}>
       {children}
     </span>
-  </td>
+  </div>
 )
 
-TreeCellExpander.propTypes = {
+TreeExpander.propTypes = {
   children: PropTypes.node,
   iconExpandClosed: PropTypes.node, // expand closed icon
   iconExpandOpened: PropTypes.node, // expand opened icon
   iconNonExpander: PropTypes.node, // unexpandable icon
-  paddingLeftInitial: PropTypes.number, // intitial left padding (i.e: Bootstrap default is 16px)
   paddingLeftMultiplier: PropTypes.number // padding left multiplier for level
 }
 
-TreeCellExpander.defaultProps = {
+TreeExpander.defaultProps = {
   iconExpandClosed: <span>[+]</span>,
   iconExpandOpened: <span>[-]</span>,
-  iconNonExpander: <span className='cell-expander' />,
-  paddingLeftInitial: 16,
+  iconNonExpander: <span className='tree-expander' />,
   paddingLeftMultiplier: 15
 }
 
-export default TreeCellExpander
+export default TreeExpander

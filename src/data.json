@@ -1,11 +1,5 @@
 [
   {
-    "id": "d257a8a8-25ae-4b5f-9200-9bafc7ebf5fc",
-    "parentId": "0",
-    "title": "AAA",
-    "isFolder": true
-  },
-  {
     "id": "996b9d33-20c0-4da2-a100-3227116fbafb",
     "parentId": "0",
     "title": "BBB.csv",
@@ -15,6 +9,12 @@
     "id": "4f2f3c8d-f728-4690-8765-9b04b8c6eb38",
     "parentId": "0",
     "title": "CCC",
+    "isFolder": true
+  },
+  {
+    "id": "d257a8a8-25ae-4b5f-9200-9bafc7ebf5fc",
+    "parentId": "0",
+    "title": "AAA",
     "isFolder": true
   },
   {
