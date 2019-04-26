@@ -4,7 +4,7 @@ import uuid from 'uuid/v4'
 
 const rootParentId = uuid()
 
-const Tree = ({ canExpand, children, getData, idProperty, nodes, setNodes, sort }) => {
+const Tree = ({ canExpand, children, getData, idProperty, noData, nodes, setNodes, sort }) => {
   const loadData = async ({ node, parentId, level }) => {
     const data = await getData(node) // TODO: Add configurable memoization
 
@@ -54,24 +54,27 @@ const Tree = ({ canExpand, children, getData, idProperty, nodes, setNodes, sort 
       : []
 
     // Always expand if root, otherwise look if parent isExpanded
-    return filteredNodes.map((node, index) => {
-      return (
-        (node.parentId === rootParentId ? true : nodes[node.parentId].isExpanded) && (
-          <Fragment key={index}>
-            {children({
-              node,
-              level: node.level,
-              canExpand: canExpand,
-              isExpandable: canExpand(node.value),
-              // * - Calls loadData here
-              onExpand: () => loadData({ node: node.value, parentId: node.value[idProperty], level: node.level + 1 }),
-              isExpanded: nodes[node.value[idProperty]].isExpanded
-            })}
-            {nodes[node.value[idProperty]].isExpanded && renderTree(node.value[idProperty], node.level + 1)}
-          </Fragment>
-        )
-      )
-    })
+    return filteredNodes.length > 0
+      ? filteredNodes.map((node, index) => {
+          return (
+            (node.parentId === rootParentId ? true : nodes[node.parentId].isExpanded) && (
+              <Fragment key={index}>
+                {children({
+                  node,
+                  level: node.level,
+                  canExpand: canExpand,
+                  isExpandable: canExpand(node.value),
+                  // * - Calls loadData here
+                  onExpand: () =>
+                    loadData({ node: node.value, parentId: node.value[idProperty], level: node.level + 1 }),
+                  isExpanded: nodes[node.value[idProperty]].isExpanded
+                })}
+                {nodes[node.value[idProperty]].isExpanded && renderTree(node.value[idProperty], node.level + 1)}
+              </Fragment>
+            )
+          )
+        })
+      : noData
   }
 
   return renderTree(0, 0)
@@ -82,13 +85,15 @@ Tree.propTypes = {
   children: PropTypes.func.isRequired,
   getData: PropTypes.func.isRequired, // params: node value
   idProperty: PropTypes.string.isRequired, // unique property defined in data
+  noData: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   nodes: PropTypes.oneOfType([PropTypes.shape({})]), // TODO: also allow tranformed node shape (see below.)
   setNodes: PropTypes.func.isRequired, // for setting nodes
   sort: PropTypes.func // array sort function
 }
 
 Tree.defaultProps = {
-  canExpand: () => true
+  canExpand: () => true,
+  noData: <span>No data here.</span>
 }
 
 export default Tree

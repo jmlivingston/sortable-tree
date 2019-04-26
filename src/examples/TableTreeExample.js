@@ -72,6 +72,11 @@ const TableTreeExample = () => {
             canExpand={node => node.isFolder}
             getData={node => getData(node)}
             idProperty="id"
+            noData={
+              <tr>
+                <td colSpan={3}>No data here.</td>
+              </tr>
+            }
             nodes={nodes}
             setNodes={setNodes}
             sort={sort}>
