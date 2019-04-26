@@ -1,13 +1,13 @@
-.tree-expander-container {
+.expander-container {
   display: inline-block;
 }
 
-.tree-expander {
+.expander {
   display: inline-block;
   width: 20px;
   cursor: pointer;
 }
 
-.tree-title {
+.expander-title {
   padding-left: 10px;
 }

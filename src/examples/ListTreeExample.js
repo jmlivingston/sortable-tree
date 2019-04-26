@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
+import Expander from '../components/Expander'
 import Tree from '../components/Tree'
-import TreeCellExpander from '../components/TreeExpander'
 import dummyData from './data.json'
 
 const ListTreeExample = () => {
@@ -26,8 +26,8 @@ const ListTreeExample = () => {
         setNodes={setNodes}
         sort={sort}>
         {({ node, level, onExpand, isExpanded, isExpandable }) => (
-          <div className="my-2">
-            <TreeCellExpander
+          <div className="my-3">
+            <Expander
               iconClosed={<span>▶</span>}
               iconOpened={<span>▼</span>}
               isExpandable={isExpandable}
@@ -35,7 +35,7 @@ const ListTreeExample = () => {
               level={level}
               onExpand={onExpand}>
               <span onClick={onExpand}>{node.value.title}</span>
-            </TreeCellExpander>{' '}
+            </Expander>{' '}
             ({node.value.id} - {node.value.isFolder.toString()})
           </div>
         )}

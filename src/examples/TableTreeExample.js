@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
+import Expander from '../components/Expander'
 import Tree from '../components/Tree'
-import TreeCellExpander from '../components/TreeExpander'
 import dummyData from './data.json'
 
 const TableTreeExample = () => {
@@ -41,7 +41,7 @@ const TableTreeExample = () => {
     })
   }
 
-  const Expander = ({ property }) =>
+  const Sorter = ({ property }) =>
     sortInfo.property === property ? sortInfo.isAsc ? <span>▼</span> : <span>▲</span> : null
 
   return (
@@ -52,17 +52,17 @@ const TableTreeExample = () => {
           <tr>
             <th style={styles.header}>
               <span onClick={() => onHeaderClick({ property: 'title' })}>
-                Title <Expander property="title" />
+                Title <Sorter property="title" />
               </span>
             </th>
             <th style={styles.header}>
               <span onClick={() => onHeaderClick({ property: 'id' })}>
-                ID <Expander property="id" />
+                ID <Sorter property="id" />
               </span>
             </th>
             <th style={styles.header}>
               <span onClick={() => onHeaderClick({ property: 'isFolder' })}>
-                Is Folder? <Expander property="isFolder" />
+                Is Folder? <Sorter property="isFolder" />
               </span>
             </th>
           </tr>
@@ -78,13 +78,9 @@ const TableTreeExample = () => {
             {({ node, level, onExpand, isExpanded, isExpandable }) => (
               <tr>
                 <td style={{ whiteSpace: 'nowrap', width: '1px' }}>
-                  <TreeCellExpander
-                    level={level}
-                    onExpand={onExpand}
-                    isExpanded={isExpanded}
-                    isExpandable={isExpandable}>
+                  <Expander level={level} onExpand={onExpand} isExpanded={isExpanded} isExpandable={isExpandable}>
                     <span onClick={onExpand}>{node.value.title}</span>
-                  </TreeCellExpander>
+                  </Expander>
                 </td>
                 <td>{node.value.id}</td>
                 <td>{node.value.isFolder.toString()}</td>

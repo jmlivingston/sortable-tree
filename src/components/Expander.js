@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import './TreeExpander.css'
+import './Expander.css'
 
-const TreeExpander = ({
+const Expander = ({
   children,
   iconClosed,
   iconOpened,
@@ -14,24 +14,24 @@ const TreeExpander = ({
   paddingLeftMultiplier
 }) => (
   <div
-    className="tree-expander-container"
+    className="expander-container"
     style={{
       paddingLeft: `${level * paddingLeftMultiplier}px`
     }}>
     {isExpandable ? (
-      <span onClick={onExpand} className="tree-expander">
+      <span onClick={onExpand} className="expander">
         {isExpanded ? iconOpened : iconClosed}
       </span>
     ) : (
       iconUnexpandable
     )}
-    <span className="tree-title" onClick={onExpand}>
+    <span className="expander-title" onClick={onExpand}>
       {children}
     </span>
   </div>
 )
 
-TreeExpander.propTypes = {
+Expander.propTypes = {
   children: PropTypes.node,
   iconClosed: PropTypes.element, // closed icon
   iconOpened: PropTypes.element, // opened icon
@@ -39,11 +39,11 @@ TreeExpander.propTypes = {
   paddingLeftMultiplier: PropTypes.number // padding left multiplier for level
 }
 
-TreeExpander.defaultProps = {
+Expander.defaultProps = {
   iconClosed: <span>[+]</span>,
   iconOpened: <span>[-]</span>,
-  iconUnexpandable: <span className="tree-expander" />,
+  iconUnexpandable: <span className="expander" />,
   paddingLeftMultiplier: 15
 }
 
-export default TreeExpander
+export default Expander

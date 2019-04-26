@@ -6,7 +6,7 @@ const App = () => {
   const [showTable, setShowTable] = useState(false) // change to show default example
   return (
     <div className="container-fluid mt-3">
-      <h1>Tree & TreeExpander Components</h1>
+      <h1>Tree & Expander Components</h1>
       <hr />
       <button className={`btn btn-${!showTable ? 'primary' : 'secondary'} mr-2`} onClick={() => setShowTable(false)}>
         List Example
