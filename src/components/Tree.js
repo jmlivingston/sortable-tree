@@ -40,9 +40,9 @@ const Tree = ({ canExpand, children, getData, idProperty, noData, nodes, setNode
 
   useEffect(() => {
     ;(async () => await loadData({ node: {}, parentId: rootParentId, level: 0 }))()
-    // TODO: Cleanup async...await
-    // TODO: Fix lint rule below. Call loadData once on load, but also from children *
-    //// eslint-disable-next-line react-hooks/exhaustive-deps
+    // TODO: Cleanup for async...await call
+    // TODO: Fix lint rule below caused by latest version of React lint rules. Call loadData once on load, but also from children *
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const renderTree = (id, level) => {
